@@ -267,6 +267,10 @@ class FilesystemHandler(dav_interface):
         """ put the object into the filesystem """
         path=self.uri2local(uri)
         try:
+            dir=os.path.dirname(path)
+            if not os.path.exists(dir):
+                os.makedirs(dir)
+
             with open(path, "bw+") as fp:
                 if isinstance(data, types.GeneratorType):
                     for d in data:
